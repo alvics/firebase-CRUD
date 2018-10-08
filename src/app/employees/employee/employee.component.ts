@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit {
-  constructor(private service: EmployeeService) {}
+  constructor(public service: EmployeeService) {}
 
   departments = [
     { id: 101, value: 'Dep 1' },
@@ -15,5 +15,20 @@ export class EmployeeComponent implements OnInit {
     { id: 103, value: 'Dep 3' }
   ];
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.service.getEmployees();
+  }
+
+  onClear() {
+    this.service.form.reset();
+    this.service.form.initializeFormGroup();
+  }
+
+  onSubmit() {
+    if (this.service.form.valid) {
+      this.service.insertEmployee(this.service.form.value);
+      this.service.form.reset();
+      this.service.form.initializeFormGroup();
+    }
+  }
 }

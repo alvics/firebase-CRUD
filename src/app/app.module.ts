@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employees/employee/employee.component';
@@ -17,7 +18,8 @@ import { EmployeeService } from './shared/employee.service';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireDatabaseModule
   ],
   providers: [EmployeeService],
   bootstrap: [AppComponent]
