@@ -1,11 +1,18 @@
+/* -----------------------------------------------------------------------
+---------------  CRUD Service Add to Firebase Database -------------------
+------------------------------------------------------------------------ */
+
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  constructor() {}
+  constructor(private firebase: AngularFireDatabase) {}
+
+  employeeList: AngularFireList<any>;
 
   form: FormGroup = new FormGroup({
     $key: new FormControl('null'),
@@ -36,11 +43,13 @@ export class EmployeeService {
     });
   }
 
+  // Set employeeList / create node employee
   getEmployees() {
-    this.employeeList = this.firebase.list('/employees');
-    return this.employeeList.snapShotChanges();
+    this.employeeList = this.firebase.list('employees');
+    return this.employeeList.snapshotChanges();
   }
 
+  // Create - pushing list to firebase
   insertEmployee(employee) {
     this.employeeList.push({
       fullName: employee.fullName,
@@ -54,6 +63,7 @@ export class EmployeeService {
     });
   }
 
+  // Update the list
   updateEmployee(employee) {
     this.employeeList.update(employee.$key, {
       fullName: employee.fullName,
@@ -67,6 +77,7 @@ export class EmployeeService {
     });
   }
 
+  // Delete list from firebase
   deleteEmployee($key: string) {
     this.employeeList.remove($key);
   }
